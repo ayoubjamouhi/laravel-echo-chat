@@ -59868,7 +59868,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Pusher.logToConsole = true;
+Pusher.logToConsole = false;
 var app = new Vue({
   el: '#app',
   delimiters: ['[[', ']]'],
@@ -59901,7 +59901,6 @@ var app = new Vue({
       axios.post("/chat/rooms/".concat(this.roomId, "/message"), {
         'content': this.content
       }).then(function (response) {// console.log(app);
-        // $('#input-mesage').val('')
       })["catch"](function (error) {
         console.log(error);
       });
@@ -59986,8 +59985,8 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/laravel-chat/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/laravel-chat/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/dotnet/DPG/laravel-echo-chat/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/dotnet/DPG/laravel-echo-chat/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

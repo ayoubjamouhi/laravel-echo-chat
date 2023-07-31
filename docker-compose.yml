@@ -1,0 +1,89 @@
+version: "3"
+services:
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: php:v2
+    container_name: laravel-chat-app
+    restart: unless-stopped
+    tty: true
+    #    expose:
+    #      - 9000
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - laravel-chat-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:1.15-alpine
+    container_name: laravel-chat-webserver
+    restart: unless-stopped
+    tty: true
+    environment:
+      - VIRTUAL_HOST=dlorgorgan.digitallearning.local,digitallearning.local,nouhaila.digitallearning.local,azizorgan.digitallearning.local,azizorg.digitallearning.local,dlorgorg.digitallearning.local,iliasorganization.digitallearning.local,othmane.digitallearning.local
+    #      - VIRTUAL_HOST=example.test # Environment variable needed for nginx proxy
+    #      - LETSENCRYPT_HOST=example.test # Environment variables needed for Let's Encrypt companion
+    #      - LETSENCRYPT_EMAIL=admin@example.test
+    ports:
+      - "50070:80"
+#    expose:
+#      - "80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - laravel-chat-network
+  #    depends_on:
+  #      - app
+  #      - db
+
+  #MySQL Service
+  db:
+    image: mysql:8.0.33
+    container_name: laravel-chat-db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "33200:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 2#9@29qeQA@h
+      MYSQL_DATABASE: digitallearning
+      MYSQL_USER: dpg23hc
+      MYSQL_PASSWORD: 2#9@29qeQA@h
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - chat-dbdata:/var/lib/mysql/
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - laravel-chat-network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    container_name: laravel-chat-phpmyadmin
+    ports:
+      - 33370:80
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      UPLOAD_LIMIT: 102400K
+    networks:
+      - laravel-chat-network
+#Docker Networks
+networks:
+  laravel-chat-network:
+    driver: bridge
+#  nginx-proxy:
+#Volumes
+volumes:
+  chat-dbdata:
+    driver: local
