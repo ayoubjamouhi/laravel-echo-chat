@@ -54,10 +54,10 @@ services:
     ports:
       - "33200:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: 2#9@29qeQA@h
+      MYSQL_ROOT_PASSWORD: 2#9@29qeQA@h@123
       MYSQL_DATABASE: digitallearning
       MYSQL_USER: dpg23hc
-      MYSQL_PASSWORD: 2#9@29qeQA@h
+      MYSQL_PASSWORD: 2#9@29qeQA@h@123
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
